@@ -1,4 +1,4 @@
-import Player from "../player.js";
+import Player from "../src/player.js";
 
 test("Player has its own gameboard", () => {
   const player =  Player();
