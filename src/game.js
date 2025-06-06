@@ -16,7 +16,12 @@ const computerBoard = document.querySelector("#computer__board")
 renderBoard(player.gameboard.board, playerBoard);
 renderBoard(computer.gameboard.board, computerBoard, true)
 
+let isPlayerTurn = true;
+computerBoard.classList.add("cursor-pointer");
+
 computerBoard.addEventListener("click", (e) => {
+  if(!isPlayerTurn) return;
+
   const cell = e.target;
 
   if (!cell.classList.contains("cell") || cell.classList.contains("hit") || cell.classList.contains("miss")) return;
@@ -24,11 +29,17 @@ computerBoard.addEventListener("click", (e) => {
   const row = +cell.dataset.row;
   const col = +cell.dataset.col;
 
+  const successAttack = player.castAttack(computer.gameboard, row, col)
+  if(!successAttack) return;
+
+  console.log(player.playedMoves)
   playerTurn(row, col)
 })
 
 function playerTurn(row, col){
-  computer.gameboard.receiveAttack(row, col);
+  isPlayerTurn = false
+  computerBoard.classList.replace("cursor-pointer", "cursor-wait");
+
   renderBoard(computer.gameboard.board, computerBoard, true)
 
 
@@ -38,11 +49,15 @@ function playerTurn(row, col){
   }
 
   setTimeout(() => {
+    computerBoard.style.cursor = "not-allowed"
     computer.makeRandomMove(player.gameboard)
     renderBoard(player.gameboard.board, playerBoard)
-    if (player.board.allShipsSunk()) {
+    if (player.gameboard.allShipsSunk()) {
       alert("Computer wins!");
+      return
     }
-  }, 500);
+    isPlayerTurn = true
+    computerBoard.classList.replace("cursor-wait", "cursor-pointer");
+  }, 2000);
 }
 

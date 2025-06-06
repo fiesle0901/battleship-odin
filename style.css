@@ -35,6 +35,7 @@ h1 {
   grid-template-rows: repeat(10, 30px);
   gap: 2px;
   margin-top: 1rem;
+ 
 }
 
 .cell {
@@ -58,4 +59,12 @@ h1 {
 
 .cell.miss {
   background-color: lightblue;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+#computer__board.cursor-wait .cell{
+  cursor: not-allowed;
 }

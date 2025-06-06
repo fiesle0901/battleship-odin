@@ -34,6 +34,8 @@ export default function Player(isComputer = false){
     isComputer,
     gameboard,
     castAttack,
-    makeRandomMove
+    makeRandomMove,
+    playedMoves,
+    recordMove
   }
 }
